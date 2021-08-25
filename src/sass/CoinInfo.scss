@@ -1,0 +1,56 @@
+@import './Variables.scss';
+
+.coin-info {
+	padding-bottom: 2rem;
+	width: 100%;
+	background-color: $background-colour;
+
+	.heading {
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		text-align: left;
+		border-bottom: 2px solid #fff;
+
+		.logo {
+			margin-left: 1rem;
+			height: 2rem;
+		}
+
+		.coin-name {
+			margin: 1rem;
+		}
+	}
+
+	.info {
+		padding: 0.5rem 0.5rem;
+	}
+
+	.info > span:first-child {
+		padding: 0.5rem;
+		font-weight: 700;
+	}
+
+	.add-favourites {
+		display: inline-flex;
+		justify-content: flex-start;
+		align-items: center;
+		padding: 1rem 0.5rem;
+		cursor: pointer;
+
+		.symbol {
+			padding: 0 0.5rem;
+		}
+
+		.add-text {
+			color: $blue;
+			font-weight: 700;
+		}
+	}
+}
+
+@media (min-width: 768px) {
+	.coin-info {
+		padding: 3rem 0 4rem 0;
+	}
+}

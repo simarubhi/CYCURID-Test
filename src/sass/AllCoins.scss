@@ -1,0 +1,54 @@
+@import './Variables.scss';
+
+.all-coins {
+	width: 100%;
+
+	.heading {
+		margin: 3rem 0 1rem 0;
+	}
+
+	.table {
+		width: 100%;
+		text-align: center;
+
+		th,
+		td {
+			padding: 1rem;
+			border-bottom: $table-border;
+		}
+
+		th {
+			display: none;
+			font-weight: 700;
+		}
+
+		th:first-child,
+		th:last-child {
+			display: table-cell;
+		}
+
+		tr > td:first-child {
+			font-weight: 600;
+		}
+
+		td {
+			display: none;
+		}
+
+		td:first-child,
+		td:last-child {
+			display: table-cell;
+		}
+	}
+}
+
+@media (min-width: 768px) {
+	.all-coins {
+		.table {
+			th,
+			td {
+				display: table-cell;
+			}
+		}
+	}
+}

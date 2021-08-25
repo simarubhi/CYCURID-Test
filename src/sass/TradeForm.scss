@@ -1,0 +1,95 @@
+@import './Variables.scss';
+
+.trade-form {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+
+	.btn-container {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin: 2rem 0;
+
+		.btn {
+			padding: 2rem 0;
+			width: 45%;
+			text-align: center;
+			color: $orange;
+			font-weight: 600;
+			letter-spacing: 1px;
+			border: 1px solid $orange;
+			cursor: pointer;
+			transition: $reg-transition;
+
+			&:hover {
+				color: $white;
+				background-color: $orange;
+			}
+		}
+	}
+
+	.dropdown {
+		margin: 2rem 0;
+		border: none;
+		border-bottom: $table-border;
+		outline: none;
+		cursor: pointer;
+		font-family: 'Poppins', sans-serif;
+		font-weight: 600;
+
+		option {
+			font-family: 'Poppins', sans-serif;
+			font-weight: 600;
+		}
+	}
+
+	.submit {
+		padding: 2rem;
+		width: 100%;
+		color: $white;
+		font-weight: 600;
+		text-align: center;
+		letter-spacing: 2px;
+		background-color: $orange;
+		transition: $reg-transition;
+		cursor: pointer;
+
+		&:hover {
+			color: $orange;
+			outline: 1px solid $orange;
+			background-color: $white;
+		}
+	}
+
+	.submit-message {
+		padding: 1rem 0;
+		text-align: center;
+		color: $green;
+		font-size: 0.9rem;
+		font-weight: 600;
+	}
+}
+
+@media (min-width: 768px) {
+	.trade-form {
+		.btn-container {
+			justify-content: space-around;
+
+			.btn {
+				padding: 1.5rem 0;
+				width: 40%;
+			}
+		}
+
+		.dropdown {
+			width: 90%;
+			align-self: center;
+		}
+
+		.submit {
+			width: 90%;
+			align-self: center;
+		}
+	}
+}

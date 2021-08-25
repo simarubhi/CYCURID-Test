@@ -1,0 +1,88 @@
+@import './Variables.scss';
+
+.favourites {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	width: 100vw;
+	min-height: 338px;
+	text-align: left;
+	background-color: $orange;
+
+	.container {
+		align-items: flex-start;
+		width: 80%;
+		color: $white;
+
+		.heading {
+			font-size: 2.2rem;
+			font-weight: 600;
+		}
+
+		.favourites-row {
+			display: flex;
+			flex-wrap: wrap;
+			margin: 0.5rem 0;
+
+			.favourite-container {
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				justify-content: space-around;
+				position: relative;
+				padding: 1rem 2rem;
+				margin: 0.5rem;
+				border: 2px solid $white;
+				cursor: pointer;
+				overflow: hidden;
+				transition: $reg-transition;
+
+				.coin-container {
+					display: flex;
+					justify-content: space-around;
+					align-items: center;
+					transition: $reg-transition;
+
+					.logo {
+						margin: 0 0.5rem;
+						height: 2.3rem;
+					}
+
+					.coin-name {
+						margin: 0 0.5rem;
+						font-weight: 700;
+					}
+				}
+
+				.hover-text {
+					position: absolute;
+					top: 100%;
+					font-weight: 700;
+					transition: $reg-transition;
+				}
+
+				&:hover {
+					border: 2px solid $darkorange;
+					outline: 2px transparent;
+					background-color: $darkorange;
+
+					.coin-container {
+						transform: translateY(-150%);
+					}
+
+					.hover-text {
+						top: 35%;
+					}
+				}
+			}
+		}
+	}
+}
+
+@media (min-width: 768px) {
+	.favourites {
+		.container {
+			max-width: $max-width;
+		}
+	}
+}
