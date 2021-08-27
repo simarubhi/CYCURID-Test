@@ -5,6 +5,10 @@
 	width: 100%;
 	background-color: $background-colour;
 
+	&.loading {
+		height: 419px;
+	}
+
 	.heading {
 		display: flex;
 		justify-content: flex-start;
@@ -35,8 +39,10 @@
 		display: inline-flex;
 		justify-content: flex-start;
 		align-items: center;
-		padding: 1rem 0.5rem;
+		margin: 0 0.5rem;
+		padding: 1rem 0;
 		cursor: pointer;
+		user-select: none;
 
 		.symbol {
 			padding: 0 0.5rem;

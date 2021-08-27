@@ -1,6 +1,30 @@
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import '../sass/AllCoins.scss';
 
-const AllCoins = () => {
+const AllCoins = props => {
+	const [data, setData] = useState();
+	const [dataLoading, setDataLoading] = useState(true);
+
+	useEffect(() => {
+		axios
+			.get(
+				'https://api.coingecko.com/api/v3/coins/markets?vs_currency=cad&per_page=10'
+			)
+			.then(res => {
+				setData(res.data);
+				setDataLoading(false);
+			});
+	}, []);
+
+	if (dataLoading) {
+		return (
+			<section className='all-coins'>
+				<h2 className='heading'>Loading...</h2>
+			</section>
+		);
+	}
+
 	return (
 		<section className='all-coins'>
 			<h2 className='heading'>ALL COINS</h2>
@@ -14,12 +38,35 @@ const AllCoins = () => {
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td>Bitcoin</td>
-						<td>10000</td>
-						<td>354324234</td>
-						<td>$20000.00</td>
-					</tr>
+					{data.map(coin => (
+						<tr>
+							<td
+								onClick={e => {
+									props.checkTradeSectionOpen(true);
+									props.coinInfo(
+										e.target.innerText.toLowerCase()
+									);
+								}}
+							>
+								{coin.id ? coin.id.toUpperCase() : 'Not Found'}
+							</td>
+							<td>
+								{coin.total_supply
+									? coin.total_supply
+									: 'Not Found'}
+							</td>
+							<td>
+								{coin.market_cap
+									? coin.market_cap
+									: 'Not Found'}
+							</td>
+							<td>
+								{coin.current_price
+									? `$${coin.current_price}`
+									: 'Not Found'}
+							</td>
+						</tr>
+					))}
 				</tbody>
 			</table>
 		</section>

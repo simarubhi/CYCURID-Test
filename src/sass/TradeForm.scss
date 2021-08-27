@@ -22,6 +22,11 @@
 			cursor: pointer;
 			transition: $reg-transition;
 
+			&.active {
+				color: $white;
+				background-color: $orange;
+			}
+
 			&:hover {
 				color: $white;
 				background-color: $orange;
@@ -29,16 +34,31 @@
 		}
 	}
 
-	.dropdown {
+	.input {
 		margin: 2rem 0;
+		width: 90%;
+		align-self: center;
 		border: none;
 		border-bottom: $table-border;
 		outline: none;
 		cursor: pointer;
 		font-family: 'Poppins', sans-serif;
 		font-weight: 600;
+	}
 
+	.trade-currency-select {
 		option {
+			font-family: 'Poppins', sans-serif;
+			font-weight: 600;
+		}
+	}
+
+	.amount {
+		padding-left: 0.4rem;
+		cursor: text;
+
+		&::placeholder {
+			color: $black;
 			font-family: 'Poppins', sans-serif;
 			font-weight: 600;
 		}
