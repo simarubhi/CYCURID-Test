@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Favourites from './components/Favourites';
 import AllCoins from './components/AllCoins';
 import TradeSection from './components/TradeSection';

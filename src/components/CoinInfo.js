@@ -7,6 +7,7 @@ const CoinInfo = props => {
 	const [data, setData] = useState();
 	const [dataLoading, setDataLoading] = useState(true);
 
+	// Getting selected coin info
 	useEffect(() => {
 		setDataLoading(true);
 		axios
@@ -69,6 +70,7 @@ const CoinInfo = props => {
 				<div
 					className='add-favourites'
 					onClick={() => {
+						// Lifting props (Favourite Coin Data) to TradeSection.js
 						props.sendFavouriteCoin(data);
 					}}
 				>

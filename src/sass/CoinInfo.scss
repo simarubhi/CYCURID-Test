@@ -55,8 +55,15 @@
 	}
 }
 
+@media (min-width: 550px) {
+	.coin-info {
+		width: 60%;
+	}
+}
+
 @media (min-width: 768px) {
 	.coin-info {
+		width: 100%;
 		padding: 3rem 0 4rem 0;
 	}
 }

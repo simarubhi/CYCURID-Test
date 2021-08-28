@@ -15,8 +15,8 @@ Thursday
 4:40pm - 5:30pm
 6:15pm - 8:00pm
 9:05pm - 9:30pm Functionality Complete
+Friday
+11:00am - 12:20pm
+2:40pm - 3:00pm
 
-Check Mobile Loading/general responsiveness
-Make it able to see 10 more coins or view all, inital 10
-edit ui to make it look better
 add tests

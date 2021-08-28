@@ -3,17 +3,23 @@ import axios from 'axios';
 import '../sass/TradeForm.scss';
 
 const TradeForm = props => {
+	// supported_vs_currencies data for dropdown
 	const [data, setData] = useState();
 	const [dataLoading, setDataLoading] = useState(true);
 
-	const [input, setInput] = useState('');
+	// Form dropdown and input
 	const [purchaseCoin, setPurchaseCoin] = useState();
-	const [purchaseSymbol, setPurchaseSymbol] = useState();
+	const [input, setInput] = useState('');
 
+	// Submit message
 	const [messagePrice, setMessagePrice] = useState();
 	const [showMessage, setShowMessage] = useState(false);
 
+	// True for buy button, False for sell button
 	const [buyOrSell, setBuyOrSell] = useState(true);
+
+	// props.selectedCoin data (filtered for symbol in message)
+	const [selectedCoinSymbol, setSelectedCoinSymbol] = useState();
 
 	useEffect(() => {
 		setShowMessage(false);
@@ -22,11 +28,18 @@ const TradeForm = props => {
 	useEffect(() => {
 		axios
 			.get(
-				'https://api.coingecko.com/api/v3/coins/markets?vs_currency=cad'
+				'https://api.coingecko.com/api/v3/simple/supported_vs_currencies'
 			)
 			.then(res => {
 				setData(res.data);
 				setDataLoading(false);
+			});
+		axios
+			.get(
+				'https://api.coingecko.com/api/v3/coins/markets?vs_currency=cad'
+			)
+			.then(res => {
+				setSelectedCoinSymbol(res.data);
 			});
 	}, []);
 
@@ -39,29 +52,25 @@ const TradeForm = props => {
 
 	const onSubmit = () => {
 		axios
-			.get(`https://api.coingecko.com/api/v3/coins/${purchaseCoin}`)
+			.get(
+				`https://api.coingecko.com/api/v3/simple/price?ids=${props.selectedCoin}&vs_currencies=${purchaseCoin}`
+			)
 			.then(res => {
-				setPurchaseSymbol(res.data.symbol);
+				setMessagePrice(res.data[props.selectedCoin][purchaseCoin]);
 				setShowMessage(true);
 			});
 	};
-
-	useEffect(() => {
-		axios
-			.get(
-				`https://api.coingecko.com/api/v3/simple/price?ids=${props.selectedCoin}&vs_currencies=${purchaseSymbol}`
-			)
-			.then(res => {
-				setMessagePrice(res.data[props.selectedCoin][purchaseSymbol]);
-			});
-	}, [purchaseSymbol, props.selectedCoin]);
 
 	if (dataLoading) {
 		return <div className='trade-form'>Loading...</div>;
 	}
 
 	return (
-		<div className='trade-form'>
+		<div
+			className='trade-form'
+			// Extra padding added when message not shown to reduce movement
+			style={{ paddingBottom: !showMessage && '43px' }}
+		>
 			<div className='btn-container'>
 				<div
 					className={buyOrSell ? 'btn active' : 'btn'}
@@ -79,11 +88,11 @@ const TradeForm = props => {
 
 			<select
 				className='trade-currency-select input'
-				onChange={e => setPurchaseCoin(e.target.value)}
+				onChange={e => setPurchaseCoin(e.target.value.toLowerCase())}
 			>
 				<option>Select Trade Currency</option>
 				{data.map(coin => (
-					<option>{coin.id}</option>
+					<option key={coin}>{coin.toUpperCase()}</option>
 				))}
 			</select>
 
@@ -104,7 +113,9 @@ const TradeForm = props => {
 				<div className='submit-message'>
 					{`You Have ${
 						buyOrSell ? 'Purchased' : 'Sold'
-					} ${input} ${purchaseSymbol.toUpperCase()} For ${messagePrice} ${props.selectedCoin.toUpperCase()} Each`}
+					} ${input} ${purchaseCoin.toUpperCase()} For ${messagePrice} ${selectedCoinSymbol
+						.find(coin => coin.id === props.selectedCoin)
+						.symbol.toUpperCase()} Each`}
 				</div>
 			)}
 		</div>

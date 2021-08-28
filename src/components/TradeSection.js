@@ -4,8 +4,10 @@ import TradeForm from './TradeForm';
 import '../sass/TradeSection.scss';
 
 const TradeSection = props => {
+	// Holds sendFavouriteCoin data
 	const [data, setData] = useState();
 
+	// Lifts props (sendFavouriteCoin) from CoinInfo.js to App.js
 	useEffect(() => {
 		props.newFavouriteCoin(data);
 	});
@@ -17,8 +19,9 @@ const TradeSection = props => {
 					<CoinInfo
 						selectedCoin={props.selectedCoin}
 						sendFavouriteCoin={data => setData(data)}
+						key={1}
 					/>,
-					<TradeForm selectedCoin={props.selectedCoin} />,
+					<TradeForm selectedCoin={props.selectedCoin} key={2} />,
 				]
 			) : (
 				<div className='select-coin-message'>
