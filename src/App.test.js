@@ -33,7 +33,7 @@ describe('Test Favourite Section', () => {
 	test('Test Adding Favourite', async () => {
 		const { container } = render(<AllCoins />);
 	});
-});/
+});
 
 // Load data in all coins
 // Simulate click on all coins
