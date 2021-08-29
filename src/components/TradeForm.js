@@ -89,10 +89,13 @@ const TradeForm = props => {
 			<select
 				className='trade-currency-select input'
 				onChange={e => setPurchaseCoin(e.target.value.toLowerCase())}
+				data-testid='currency-form'
 			>
 				<option>Select Trade Currency</option>
 				{data.map(coin => (
-					<option key={coin}>{coin.toUpperCase()}</option>
+					<option key={coin} value={coin} data-testid='options'>
+						{coin.toUpperCase()}
+					</option>
 				))}
 			</select>
 
@@ -103,6 +106,7 @@ const TradeForm = props => {
 					allowNumber(e);
 				}}
 				value={input}
+				data-testid='input-form'
 			></input>
 
 			<div className='submit' onClick={() => onSubmit()}>
@@ -110,7 +114,7 @@ const TradeForm = props => {
 			</div>
 
 			{showMessage && (
-				<div className='submit-message'>
+				<div className='submit-message' data-testid='submit-message'>
 					{`You Have ${
 						buyOrSell ? 'Purchased' : 'Sold'
 					} ${input} ${purchaseCoin.toUpperCase()} For ${messagePrice} ${selectedCoinSymbol

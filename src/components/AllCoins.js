@@ -49,9 +49,11 @@ const AllCoins = props => {
 									// Lifting Props to App.js
 									props.checkTradeSectionOpen(true);
 									props.coinInfo(
-										e.target.innerText.toLowerCase()
+										e.target.innerHTML.toLowerCase()
 									);
 								}}
+								// Used for tests
+								data-testid='coin-set'
 							>
 								{coin.id ? coin.id.toUpperCase() : 'Not Found'}
 							</td>

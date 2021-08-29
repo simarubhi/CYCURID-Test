@@ -1,11 +1,26 @@
-import { act, getByTestId, render, screen } from '@testing-library/react';
-import { shallow, mount } from 'enzyme';
-import App from './App';
+import {
+	act,
+	waitForElementToBeRemoved,
+	fireEvent,
+	render,
+	screen,
+	waitFor,
+	getByText,
+} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { shallow } from 'enzyme';
 import Favourites from './components/Favourites';
 import AllCoins from './components/AllCoins';
-import TradeSection from './components/TradeSection';
 import CoinInfo from './components/CoinInfo';
 import TradeForm from './components/TradeForm';
+
+/*
+
+** Often first couple of test script runs will return timeout errors. Usually running 4-5 times consitently brings passed tests (CTRL+S on App.test.js). **
+
+** Known issues about warnings being displayed (Tests still pass) **
+
+*/
 
 describe('Test Ui Render', () => {
 	test('Favourites Section Render Test', () => {
@@ -29,25 +44,103 @@ describe('Test Ui Render', () => {
 	});
 });
 
-describe('Test Favourite Section', () => {
-	test('Test Adding Favourite', async () => {
-		const { container } = render(<AllCoins />);
+describe('General Tests', () => {
+	test('All Coins Data Loading', async () => {
+		const { container, unmount } = render(<AllCoins />);
+
+		expect(getByText(container, 'Loading...')).toBeInTheDocument();
+
+		await waitForElementToBeRemoved(() =>
+			getByText(container, 'Loading...')
+		);
+
+		expect(getByText(container, 'ALL COINS')).toBeInTheDocument();
+
+		expect(getByText(container, 'BITCOIN')).toBeInTheDocument();
+
+		unmount();
+	});
+
+	test('Coin Info Opens On All Coin Click', async () => {
+		const trigger = jest.fn();
+		const coinFunc = jest.fn();
+
+		act(() => {
+			render(
+				<AllCoins checkTradeSectionOpen={trigger} coinInfo={coinFunc} />
+			);
+		});
+
+		await waitForElementToBeRemoved(() => screen.getByText('Loading...'));
+
+		expect(screen.getAllByTestId('coin-set')[0]).toBeInTheDocument();
+
+		act(() => {
+			fireEvent.click(screen.getAllByTestId('coin-set')[0]);
+		});
+
+		expect(trigger).toBeCalledTimes(1);
+	});
+
+	test('Favourites Being Added', async () => {
+		const trigger = jest.fn();
+
+		act(() => {
+			render(
+				<CoinInfo
+					selectedCoin={'bitcoin'}
+					sendFavouriteCoin={trigger}
+				/>
+			);
+		});
+
+		expect(screen.getByText('Loading...')).toBeInTheDocument();
+
+		await waitForElementToBeRemoved(() => screen.getByText('Loading...'));
+
+		expect(screen.getByText('BITCOIN')).toBeInTheDocument();
+
+		expect(screen.getByText('ADD TO FAVOURITES')).toBeInTheDocument();
+
+		act(() => {
+			fireEvent.click(screen.getByText('ADD TO FAVOURITES'));
+		});
+
+		expect(trigger).toBeCalledTimes(1);
+	});
+
+	test('Form Input', async () => {
+		act(() => {
+			render(<TradeForm selectedCoin={'bitcoin'} />);
+		});
+
+		expect(screen.getByText('Loading...')).toBeInTheDocument();
+
+		await waitForElementToBeRemoved(() => screen.getByText('Loading...'));
+
+		expect(screen.getByText('BUY')).toBeInTheDocument();
+
+		act(() => {
+			userEvent.selectOptions(screen.getByTestId('currency-form'), 'btc');
+			expect(screen.getAllByTestId('options')[0].selected).toBeTruthy();
+		});
+
+		act(() => {
+			userEvent.type(screen.getByTestId('input-form'), '1');
+		});
+
+		expect(screen.getByTestId('input-form')).toHaveValue('1');
+
+		act(() => {
+			fireEvent.click(screen.getByText('SUBMIT'));
+		});
+
+		await waitFor(() => {
+			setTimeout(() => {
+				expect(
+					screen.getByTestId('submit-message')
+				).toBeInTheDocument();
+			}, 7000);
+		});
 	});
 });
-
-// Load data in all coins
-// Simulate click on all coins
-// simulate click on favouite
-// Check favourite for update
-
-// describe('Correct Crypto Price', () => {
-// Make test so that crypto price is tested
-// });
-
-// describe('Favourites Added', () => {
-// Make test so that if coin added to favourites, favourites has the coin added
-// });
-
-// describe('Favourites hover', () => {
-// Make test so that if hover on favourite coin remove appears
-// });
