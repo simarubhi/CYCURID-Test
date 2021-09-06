@@ -1,4 +1,4 @@
-# Cryto Tracker
+# Crypto Tracker
 
 ## Key Features and Concepts
 
